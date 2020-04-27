@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block head %}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+	
+     <link href = "{{ url_for('static', filename = 'styles/homepage_style.css')}}" 	rel = "stylesheet">
+
+    <!--Icon-->
+    <link href = "static/icons/icons8-books-48.png" rel = "icon">
+{% endblock %}
+
+{% block title %}
+	| Review someone's mind
+{% endblock %}
+
+{% block body %}
+	<nav>
+	<form action = "{{ url_for('search')}}" method="post">
+		<!-- Search form -->
+		<div class="search bar">
+	  		<input class="form-control" type = "text" name = "book_details" 			placeholder = "ISBN / Title / Author" aria-label = "Search">
+	  		<div class = "form-control">Search</div>
+		</div>
+	</form>		
+	</nav>
+	
+		<div class = "container">
+			<div class = "col-lg-4">
+			{% for book  in books %}   	
+				<div class = "container p-4 my-5 bg-dark text-white">
+				  	<ul style="font-size: 20px">
+				  	<h1>{{ book.title }}</h1>
+						<li> Author: {{ book.author }}</li>
+						<li> ISBN: {{ book.isbn }}</li>
+						<li> Year: {{ book.year }}</li>
+						<li> Average Ratings: </li>
+					</ul>
+				</div>
+			{% endfor %}
+
+		<footer class = "button">
+           Priyansh Bordia &copy; 2020
+        </footer>
+
+{% endblock %}

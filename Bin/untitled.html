@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block head %}	
+	<link href = "{{ url_for('static', filename = 'styles/homepage_style.css') }}" 
+        rel = "stylesheet">
+	<!--Icon-->
+     <link href = "static/icons/icons8-books-48.png" rel = "icon">
+
+{% endblock %}
+
+{% block title %}
+	| Review someone's mind
+{% endblock %}
+
+{% block body %}
+		<div class = "topnav">
+			<form action = "{{ url_for('search') }}" method = "post">
+				<input type = "text" name = "book_details" placeholder = "Name / Author / ISBN">
+				<button class = btn btn-primary>Search</button>
+			</form>
+			<a href = "#">Logout</a>
+			<a href = "login.html">Login&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>
+
+		<div class = "container my-container">
+			<div class = "row my-row">
+				{% for book in books %} 
+					<div class = "col-3 justify-content-between my-col">
+						<ul> <h4>{{ book.title }}</h4>
+							<li> Author: {{ book.author }}</li>
+							<li> ISBN: {{ book.isbn }}</li>
+							<li> Year: {{ book.year }}</li>
+							<li> Average Ratings: </li>
+						</ul>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+{% endblock %}

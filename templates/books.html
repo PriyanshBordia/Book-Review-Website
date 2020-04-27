@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	| Books
+{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+	<ol>
+		{% for book in books %}
+			<li>
+				{book.title}   
+				{book.author}      
+				<a href = "{{ url_for('book', book=book) }}">{book.isbn}</a>     
+				{book.year}
+			</li>
+		{% endfor%}
+	</ol>
+{% endblock %}

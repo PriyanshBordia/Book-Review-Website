@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block head %}
+	<style>
+		.message
+		{
+			max-width: 700px;
+			text-align: center;
+			margin: auto;
+			padding: 40px;
+			font-size: 24px;
+		}
+		.message a
+		{
+			text-decoration: none !important;
+		}
+	</style>
+
+	<!--Icon-->
+    <link href = "static/icons/icons8-alert-80.png" rel = "icon">
+{% endblock %}
+
+{% block title %}
+	| Error!!
+{% endblock %}
+
+{% block body %}
+	<div class = "message">
+		<div class = "alert alert-danger" role = "alert">
+	 		{{ message }}          
+	    </div>
+	    <button>
+	    	<a href = "{{ url_for('index') }}">Go Back.</a>
+	    </button>
+	 </div>
+{% endblock %}

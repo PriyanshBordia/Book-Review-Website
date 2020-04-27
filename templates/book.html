@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block head %}	
+	<link href = "{{url_for('static', filename = 'styles/book_style.css')}}"	      rel = "stylesheet">
+	<!--Icon-->
+	<link href = "static/icons/icons8-books-64.png" rel = "icon">
+{% endblock %}
+
+{% block title %}
+	| Book Details
+{% endblock %}
+
+{% block body %}
+	<div class = "container-flex pt-4 bg-dark text-white">
+		<div id = "details">
+			<ul>
+				<header>{{ book.title }}</header>
+				<li>Author : {{ book.author }}</li>
+				<li>ISBN   : {{ book.isbn }}</li>
+				<li>Year   : {{ book.year }}</li>
+			</ul>
+		</div>
+		<div class = "box-item">User Ratings
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star clecked"></span>
+			<span class="fa fa-star clecked"></span>
+		</div>
+	</div>
+
+{% endblock %}

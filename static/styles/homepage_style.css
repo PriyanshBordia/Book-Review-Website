@@ -1,0 +1,22 @@
+/*Footer*/
+footer
+{
+    text-decoration: none !important;
+    color: grey;         /* Gray */
+    font-size: 45px;
+    text-align: center;
+    margin: 10px;
+}
+
+/*Hower Over Effect*/
+.button
+{
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;    
+}
+
+.button:hover
+{
+    background-color: white;
+    color: rgb(120,81,169);    
+}
