@@ -15,8 +15,11 @@ pip install -r requirements.txt
 bash run_local.sh
 
 ```
-### Here are some screenshots that show functionality of my app
+## Here are some screenshots that show functionality of my app:
+
 #### Registration Page:
-![Image of Yaktocat]
-(https://octodex.github.com/images/yaktocat.png)
+![Registeration](./screenshots/register.png)
+
+#### Login Page:
+![Login](./screenshots/login.png)
 
