@@ -13,7 +13,6 @@ git clone https://github.com/PriyanshBordia/Books-Reviews-Website.git
 cd Books-Review-Website
 pip install -r requirements.txt
 bash run_local.sh
-
 ```
 ## Here are some screenshots that show functionality of my app:
 
