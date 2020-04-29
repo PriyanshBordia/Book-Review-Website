@@ -1,11 +1,23 @@
+nav
+{
+   font-size: 20px;
+}
+
+.my-container
+{
+  max-width: 700px;
+  margin: auto;
+}
+
+
 /*Footer*/
 footer
 {
     text-decoration: none !important;
     color: grey;         /* Gray */
-    font-size: 45px;
     text-align: center;
-    margin: 10px;
+    margin: 20px;
+    padding: 10px;
 }
 
 /*Hower Over Effect*/

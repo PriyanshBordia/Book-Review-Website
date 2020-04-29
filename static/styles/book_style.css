@@ -1,35 +1,78 @@
-.container
+nav
 {
-	font-family: Arial;
-  	margin: auto; /* Center website */
-  	margin-top: 20px;
-  	max-width: 700px; /* Max width */
+   font-size: 20px;
 }
 
-.box-item 
+#book_details
 {
-	font-size: 24px;
+	width: 900px;
+	margin: auto;
+}
+.my-container
+{
+	max-width: 700px;
+	margin: auto;
+}
+.login-input 
+{
+	width: 2.5in;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-#details
+.login-submit-container 
 {
-	font-size: 30px;
+    width: 2.5in;
+    text-align: left; 
 }
 
-.checked: visited
+.login-submit-button 
 {
-	color: orange;
+    width: 2.0in;
 }
 
-/* Responsive layout - make the columns stack on top of each other instead of next to each other */
-@media (max-width: 400px) 
+.search-container 
 {
-   .side, .middle 
-   {
-   		width: 100%;
-   }
-  /* Hide the right column on small screens */
-  .right {
-    display: none;
-  }
+    margin-top: 30px;
+}
+
+
+.review-form 
+{
+    margin: 20px;
+}
+
+.review-checkbox 
+{
+    margin-top: 0.15in;
+}
+
+hr 
+{
+    height: 0;
+    margin-bottom: 15px;
+    background-color: gray;
+}
+
+/*Footer*/
+footer
+{
+    text-decoration: none !important;
+    color: grey;         /* Gray */
+    text-align: center;
+    margin: 20px;
+    padding: 10px;
+}
+
+/*Hower Over Effect*/
+.button
+{
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;    
+}
+
+.button:hover
+{
+    background-color: white;
+    color: rgb(120,81,169);    
 }
