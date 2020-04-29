@@ -2,6 +2,9 @@
 
 {% block head %}
 	<link href = "{{ url_for('static', filename = 'styles/book_style.css')}}" 	rel = "stylesheet">
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 	<!--Icon-->
     <link href = "static/icons/icons8-books-64.png" rel = "icon">
@@ -15,7 +18,7 @@
 	<!--TODO: Add NavBar with: App Name, LogIn, LogOut, Register, etc-->
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <div> Books </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"      data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"     aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -24,10 +27,17 @@
 	            <a class="nav-item nav-link mr-5" href ="{{url_for('index')}}">
 	            	Logout
 	            </a>
-
 	        </div>
         </div>
     </nav>
+
+    
+
+
+
+
+
+
 
     <div id="book-details">
     <div class="container search-container">
@@ -42,22 +52,23 @@
 	            <p class="card-text">ISBN : {{ book.isbn }}</p>
 	            <p><strong>Rate</strong></p>
 				<label class="radio-inline">
-					<input type="checkbox" name="1star"> 1
+					<input type="radio" name="1star"> 1
 				</label>
 				<label class="radio-inline">
-					<input type="checkbox" name="2star"> 2
+					<input type="radio" name="2star"> 2
 				</label>
 				<label class="radio-inline">
-					<input type="checkbox" name="3star"> 3
+					<input type="radio" name="3star"> 3
 				</label>
 				<label class="radio-inline">
-					<input type="checkbox" name="4star"> 4
+					<input type="radio" name="4star"> 4
 				</label>
 				<label class="radio-inline">
-					<input type="checkbox" name="5star">5
+					<input type="radio" name="5star">5
 				</label>
 				<div class="login-submit-container">
-					<button type="submit" class="btn btn-primary 					login-submit-button">Write a review.</button>
+				<button type="submit" class="btn btn-success login-submit-button">		Leave a review
+				</button>
 				</div>
     		</div> 
     	</div>  

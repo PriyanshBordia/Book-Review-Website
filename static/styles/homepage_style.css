@@ -13,11 +13,12 @@ nav
 /*Footer*/
 footer
 {
-    text-decoration: none !important;
-    color: grey;         /* Gray */
-    text-align: center;
-    margin: 20px;
+	margin: 20px;
     padding: 10px;
+    color: grey;         /* Gray */
+    text-decoration: none !important;
+    text-align: center;
+    font-size: 20px;
 }
 
 /*Hower Over Effect*/

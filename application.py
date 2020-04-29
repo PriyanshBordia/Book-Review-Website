@@ -1,10 +1,15 @@
 import os
 import requests
+import connect_database  #
 
 from flask import Flask, render_template, session, request, url_for, redirect, jsonify, flash
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from cerberus import Validator
+from util import sql, get_password, search_in_books, write_review, get_reviews
+
+db = connect_database.get_db()
 
 app = Flask(__name__)
 
@@ -129,8 +134,9 @@ def search():
 	else:
 		for i in range(0,len(books)):
 			books[i] = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": books[i]}).fetchone()
+
+		books.sort(reverse = True)
 		return render_template("search.html", books=books)
-	#Corresponding error messages
 
 
 # Details about about with provided isbn
@@ -171,15 +177,16 @@ def books(details):
 if __name__ == '__main__':
 	app.run(debug=True)
 
-""" if error_type == 1:
-		return render_template("error.html", message="Try entering correct details!")
+@app.route('/register_error/<string:error>')
+def register_error(error):
+#Corresponding error messages
+	if error_type == 'email':
+		error_message = "Please enter a valid email!"
 	
-	elif error_type == 1:
-		return render_template("error.html", message="No book with entered title!")
+	elif error_type == 'pass':
+		error_message = "Passwords do not match!"
 
-	elif error_type == 2:
-		return render_template("error.html", message="Author has no books in his name!")
+	elif error_type == 'already exists':
+		error_message = "Sorry. The email already exists in our records. Please register with another email."
 
-	else:
-		return render_template("error.html", message="Invalid ISBN number!")	
-"""
+	return render_template("register_error.html", message=error_message)	
