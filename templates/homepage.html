@@ -1,21 +1,29 @@
 {% extends "layout.html" %}
 
 {% block head %}
-     <link href = "{{ url_for('static', filename = 'styles/homepage_style.css')}}" 	rel = "stylesheet">
+    <style media="screen">
+        .my-container
+        {
+            /* margin: 5px; */
+            padding: 10px;
+            border: 10px solid white;
+            border-radius: 14px;
+        }
+    </style>
 
     <!--Icon-->
     <link href = "static/icons/icons8-books-48.png" rel = "icon">
 {% endblock %}
 
 {% block title %}
-	| Review someone's mind
+	 Review someone's mind
 {% endblock %}
 
 {% block body %}
-	<div class = "container">
-		<div class = "col-lg-4">
+	<div class = "container container-fluid search-container">
+		<div class = "row search-row justify-content-center">
 			{% for book  in books %}
-				<div class = "container p-4 my-5 bg-dark text-white">
+				<div class = "col-lg-4 col-md-5 col-sm-6 col-8 my-container bg-dark text-white">
 				  	<ul style="font-size: 20px">
 				  	<h1>{{ book.title }}</h1>
 						<li> Author: {{ book.author }}</li>

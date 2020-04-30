@@ -1,78 +1,48 @@
 {% extends "layout.html" %}
 
 {% block head %}
-	<link href = "{{ url_for('static', filename = 'styles/book_style.css')}}" 	rel = "stylesheet">
-	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
 	<!--Icon-->
-    <link href = "static/icons/icons8-books-64.png" rel = "icon">
+    <link href = "static/icons/icons8-repository-64.png" rel = "icon">
 {% endblock %}
 
 {% block title %}
-	| {{ book.title }}
+	 {{ book.title }}
 {% endblock %}
 
 {% block body %}
-	<!--TODO: Add NavBar with: App Name, LogIn, LogOut, Register, etc-->
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <div> Books </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse"      data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"     aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-	        <div class="navbar-nav ml-auto">
-	            <a class="nav-item nav-link mr-5" href ="{{url_for('homepage')}}">		Search</a>
-	            <a class="nav-item nav-link mr-5" href ="{{url_for('index')}}">
-	            	Logout
-	            </a>
-	        </div>
-        </div>
-    </nav>
-
-    
-
-
-
-
-
-
-
-    <div id="book-details">
-    <div class="container container-fluid">
-   	<div class="row search-row justify-content-center">
-     	<div class="col-lg-6 pt-3 mb-3">
-     	   	<div class="card">
-				<div class="card-header">
-					{{ book.author }}, {{ book.year }}
-				</div>
-    			<div class="card-body">
-	            	<strong><h5 class="card-title">{{ book.title }}</h5>
-	            	<p class="card-text">ISBN : {{ book.isbn }}</p></strong>
-	            <p><strong>Rate</strong></p>
-				<label class="radio-inline">
-					<input type="radio" name="1star"> 1
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="2star"> 2
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="3star"> 3
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="4star"> 4
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="5star">5
-				</label>
-				<div class="login-submit-container">
-				<button type="submit" class="btn btn-success login-submit-button">		Leave a review
-				</button>
-				</div>
-    		</div> 
-    	</div>  
-	</div>
+    <div class="container container-fluid mt-4">
+	   	<div class="row search-row justify-content-center">
+	     	<div class="col-lg-8 col-md-6 col-8 pt-6 mb-3">
+	     	   	<div class="card">
+					<div class="card-header">
+						{{ book.author }}, {{ book.year }}
+					</div>
+	    			<div class="card-body">
+		            	<strong><h5 class="card-title">{{ book.title }}</h5>
+		            	<p class="card-text">ISBN : {{ book.isbn }}</p></strong>
+			            <p><strong>Rate</strong></p>
+						<label class="radio-inline">
+							<input type="radio" name="1star"> 1
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="2star"> 2
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="3star"> 3
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="4star"> 4
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="5star">5
+						</label>
+						<div class="login-submit-container">
+							<button type="submit" class="btn btn-success login-submit-button"> Leave a review </button>
+						</div>
+	    			</div>
+	    		</div>
+			</div>
+		</div>
 	</div>
 
 {% endblock %}

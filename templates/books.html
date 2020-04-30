@@ -1,22 +1,43 @@
 {% extends "layout.html" %}
 
-{% block title %}
-	| Books
+{% block head %}
+    <style media="screen">
+        .container
+        {
+            padding: 10px;
+            <!-- border: 10px solid white; -->
+        }
+    </style>
+    <!--Icon-->
+    <link href = "static/icons/icons8-books-64.png" rel = "icon">
 {% endblock %}
 
-{% block head %}
-
+{% block title %}
+ 	   Books
 {% endblock %}
 
 {% block body %}
-	<ol>
-		{% for book in books %}
-			<li>
-				{book.title}   
-				{book.author}      
-				<a href = "{{ url_for('book', book=book) }}">{book.isbn}</a>     
-				{book.year}
-			</li>
-		{% endfor%}
-	</ol>
+	<div class="container container-fluid mt-4">
+		<div class="row justify-content-center">
+				{% for book in books %}
+                <div class="col-lg-4 col-md-5 col-sm-6 col-8 my-container mb-5">
+					<div class="card">
+						<div class="card-header h5">
+							{{ book.author }}, {{ book.year }}
+						</div>
+						<div class="card-body h6">
+							<h3 class="card-title">{{ book.title }}</h3>
+							<p class="card-text">ISBN : {{ book.isbn }}</p>
+							<a href="{{ url_for('book', details = book.isbn) }}"
+								class="btn btn-primary">Go to book page</a>
+						</div>
+					</div>
+                </div>
+				{% endfor %}
+			</div>
+		</div>
+
+	<footer class = "button">
+		Andrømed &copy; 2020
+	</footer>
 {% endblock %}

@@ -1,38 +1,26 @@
 {% extends "layout.html" %}
 
 {% block head %}
-	<link href = "{{url_for('static', filename = 'styles/search_style.css')}}" rel = "stylesheet">
-	<!--Icon-->
-	<link href = "static/icons/icons8-books-64.png" rel = "icon">
+
 {% endblock %}
 
 {% block title %}
-	| Book Details
+	  World of Books
 {% endblock %}
 
 {% block body %}
-
-    <div class="container container-fluid search-container">
-    	<div class="row justify-content-center">
-    		<div class="col-lg-4 col-md-5 col-sm-6 col-8 pt-3">
-    			{% for book in books %}
-			        <div class="card">
-			        	<div class="card-header">
-			     			{{ book.author }}, {{ book.year }}
-			            </div>
-			        	<div class="card-body">
-				            <h3 class="card-title">{{ book.title }}</h3>
-				            <p class="card-text">ISBN : {{ book.isbn }}</p>
-				            <a href="{{ url_for('book', details = book.isbn) }}"
-			            		class="btn btn-primary">Go to book page</a>
-			        	</div>
-			    	</div>
-		        {% endfor %}
-		    </div>
-    	</div>
+	<div class="container my-container">
+		<form action = "{{url_for('search')}}" method="post">
+			<div class = "form-text h2 login-input form-heading mt-4">
+				Hi []:) ,
+				search and review thousands of books!
+			</div>
+			<div class = "form-group login-input form-text h3">
+				<input type="text" class="form-control" name="book_details" placeholder="Enter ISBN, title or author">
+			</div>
+			<div class="login-submit-container">
+				<button type="submit" class="btn btn-primary login-submit-button"> Search </button>
+			</div>
+		</form>
 	</div>
-
-	<footer class = "button">
-       	Andrømed &copy; 2020
-    </footer>
 {% endblock %}

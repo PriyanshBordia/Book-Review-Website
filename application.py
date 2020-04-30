@@ -78,8 +78,8 @@ def login():
 
 
 """If user exists create a local session for the user"""
-@app.route("/session", methods=["POST", "GET"])
-def session():
+@app.route("/login_session", methods=["POST", "GET"])
+def login_session():
 	if request.method == "GET":
 		return render_template("error.html", message="Try Login!!")
 
@@ -90,15 +90,20 @@ def session():
 		return render_template("error.html", message="Invalid username or password! It takes only 15s to register! Try registering.");
 
 	else:
-		"""Create a session for the user"""
-		books = db.execute("SELECT * FROM books FETCH FIRST 15 ROW ONLY")
-		return render_template("homepage.html", nav1="Marked", link1="index", nav2="Logout", link2="index", books=books)
+		return render_template("search.html", nav1="Marked", link1="index", nav2="Logout", link2="index", books=books)
 
+		# redirect("search_book")
+"""Create a session for the user"""
 
 @app.route("/homepage")
 def homepage():
 	books = db.execute("SELECT * FROM books FETCH FIRST 15 ROW ONLY")
 	return render_template("homepage.html", nav1="Marked", link1="index", nav2="Logout", link2="login", books = books)
+
+
+@app.route("/search_book")
+def search_book():
+	return render_template("search.html", nav1="Marked", link1="index", nav2="Logout", link2="index", books=books)
 
 
 # Search books that match the string entered
@@ -144,7 +149,7 @@ def search():
 			books[i] = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": books[i]}).fetchone()
 
 		books.sort(reverse = True)
-		return render_template("search.html", books=books)
+		return render_template("books.html", nav1="Marked", link1="index", nav2="Logout", link2="login", books=books)
 
 
 # Details about about with provided isbn
@@ -157,7 +162,7 @@ def book(details):
 	if book is None:
 		return render_template("error.html", message = "No book with entered title / Invalid ISBN")
 	
-	return render_template("book.html", book=book)
+	return render_template("book.html", nav1="Search", link1="search_book", nav2="Logout", link2="login", book=book)
 
 """Avg Ratings and rating distribution, total count"""
 @app.route("/api/<string:title>", methods=["POST", "GET"])
