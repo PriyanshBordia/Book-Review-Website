@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container container-fluid mt-4">
+    <div class="container container-fluid mt-5">
 	   	<div class="row search-row justify-content-center">
 	     	<div class="col-lg-8 col-md-6 col-8 pt-6 mb-3">
 	     	   	<div class="card">
@@ -18,31 +18,72 @@
 						{{ book.author }}, {{ book.year }}
 					</div>
 	    			<div class="card-body">
-		            	<strong><h5 class="card-title">{{ book.title }}</h5>
-		            	<p class="card-text">ISBN : {{ book.isbn }}</p></strong>
-			            <p><strong>Rate</strong></p>
-						<label class="radio-inline">
-							<input type="radio" name="1star"> 1
-						</label>
-						<label class="radio-inline">
-							<input type="radio" name="2star"> 2
-						</label>
-						<label class="radio-inline">
-							<input type="radio" name="3star"> 3
-						</label>
-						<label class="radio-inline">
-							<input type="radio" name="4star"> 4
-						</label>
-						<label class="radio-inline">
-							<input type="radio" name="5star">5
-						</label>
-						<div class="login-submit-container">
-							<button type="submit" class="btn btn-success login-submit-button"> Leave a review </button>
-						</div>
-	    			</div>
-	    		</div>
-			</div>
-		</div>
-	</div>
+		            	<h5 class="card-title">
+                            <strong>{{ book.title }}</strong>
+                        </h5>
+		            	<p class="card-text">
+                            <strong>ISBN : </strong>{{ book.isbn }}<br>
+                            <strong>Goodreads Reviews : </strong> { }<br>
+			                <strong>Average Rating : </strong> {} <br>
+                        </p>
+                        <a href="#review-form" class="btn btn-primary" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="review-form">Write a review</a>
+                    </div>
+                    <div class="collapse" id="review-form">
+                        <form action="{{ url_for('register_user') }}" method="post">
+                            <div class="form-group review-form">
+                                <input type="text" class="form-control" id="book-review" name="review" aria-describedby="emailHelp" placeholder="Write a short review.">
+                                <div class="review-checkbox">
+                                    <strong>Rating : <br></strong>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="book-rating" id="rating1" value="1">
+                                        <label class="form-check-label" for="rating1">1</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="book-rating" id="rating2" value="1">
+                                        <label class="form-check-label" for="rating2">2</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="book-rating" id="rating3" value="3">
+                                        <label class="form-check-label" for="rating3">3</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="book-rating" id="rating4" value="4">
+                                        <label class="form-check-label" for="rating4">4</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="book-rating" id="rating5" value="5">
+                                        <label class="form-check-label" for="rating5">5</label>
+                                    </div>
+                                </div>
+                                <hr>
+        						<div class="login-submit-container">
+        							<button type="submit" class="btn btn-success login-submit-button"> Leave a review </button>
+        						</div>
+	    			        </div>
+                        </form>
+	    		    </div>
+			    </div>
+		    </div>
+	    </div>
+        <div class="row user-reviews justify-content-center">
+        <div class="col-10 mt-10">
+            <hr class="">
+            <strong>User reviews:</strong>
+        </div>
+        {% for review in reviews %}
+        <div class="col-10 mt-3">
+        <div class="card bg-light mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><strong>Rating : {{ review[4] }}</strong></h5>
+            <p class="card-text">{{ review[3] }}</p>
+          </div>
+          <div class="card-footer">
+              <small class="text-muted">@{{ review[1] }}</small>
+          </div>
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
 
 {% endblock %}
