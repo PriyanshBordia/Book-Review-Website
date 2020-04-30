@@ -1,8 +1,7 @@
 {% extends "layout.html" %}
 
 {% block head %}
-
-	<link href = "{{ url_for('static', filename = 'styles/index_style.css') }}" 
+	<link href = "{{ url_for('static', filename = 'styles/index_style.css') }}"
         rel = "stylesheet">
 
 	<!--Icon-->
@@ -10,39 +9,27 @@
 {% endblock %}
 
 {% block title %}
-	| Review more than thousand books!
+	Review more than thousand books!
 {% endblock %}
 
 {% block body %}
-	<!--TODO: Add NavBar with: App Name, LogIn, LogOut, Register, etc-->
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <div> Books </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-	        <div class="navbar-nav ml-auto">
-	            <a class="nav-item nav-link mr-5" href ="{{url_for('register')}}">		Register</a>
-	        </div>
-        </div>
-    </nav>
     <div class="container my-container">
-	<form action = "{{url_for('session')}}" method="post">	
-	    <div class = "form-text h1 login-input form-heading mt-4">
-	    	Login to search and review thousands of books!
-	    </div>
-		<div class = "form-group form-text h3">
-		    <input type="email" class="form-control login-input" id="exampleInputEmail1" 	aria-describedby="emailHelp" name="user_name" placeholder="Enter email">		
-		</div>
-		<div class = "form-group">
-		    <input type="password" class="form-control login-input" 
-		    id="exampleInputPassword1" name="user_pass" placeholder="Password">
-		</div>
-		
-		<div class="login-submit-container">
-			<button type="submit" class="btn btn-primary login-submit-button">				Submit      
-			</button>
-		</div>
-	</form>
+		<form action = "{{url_for('session')}}" method="post">
+		    <div class = "form-text h1 login-input form-heading mt-4">
+		    	Login to search and review thousands of books!
+		    </div>
+			<div class = "form-group form-text h3">
+			    <input type="email" class="form-control login-input" id="exampleInputEmail1" 	aria-describedby="emailHelp" name="user_name" placeholder="Enter email">
+			</div>
+			<div class = "form-group">
+			    <input type="password" class="form-control login-input"
+			    id="exampleInputPassword1" name="user_pass" placeholder="Password">
+			</div>
+
+			<div class="login-submit-container">
+				<button type="submit" class="btn btn-primary login-submit-button">				Submit
+				</button>
+			</div>
+		</form>
 	</div>
 {% endblock %}

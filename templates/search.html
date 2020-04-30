@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
-{% block head %}	
-	<link href = "{{url_for('static', filename = 'styles/book_style.css')}}"	      rel = "stylesheet">
+{% block head %}
+	<link href = "{{url_for('static', filename = 'styles/search_style.css')}}" rel = "stylesheet">
 	<!--Icon-->
 	<link href = "static/icons/icons8-books-64.png" rel = "icon">
 {% endblock %}
@@ -11,42 +11,27 @@
 {% endblock %}
 
 {% block body %}
-	<!--TODO: Add NavBar with: App Name, LogIn, LogOut, Register, etc-->
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <div> Books </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-	        <div class="navbar-nav ml-auto">
-	            <a class="nav-item nav-link mr-5" href ="{{url_for('homepage')}}">		Search</a>
-	            <a class="nav-item nav-link mr-5" href ="{{url_for('index')}}">
-	            	Logout
-	            </a>
 
-	        </div>
-        </div>
-    </nav>
-	<div class="container search-container">
-    	<div class="row search-row justify-content-center">
-     	   <div class="col-lg-4 col-md-5 col-sm-6 col-8  mb-3">
-		        {% for book in books %}
+    <div class="container container-fluid search-container">
+    	<div class="row justify-content-center">
+    		<div class="col-lg-4 col-md-5 col-sm-6 col-8 pt-3">
+    			{% for book in books %}
 			        <div class="card">
 			        	<div class="card-header">
 			     			{{ book.author }}, {{ book.year }}
 			            </div>
 			        	<div class="card-body">
-				            <h5 class="card-title">{{ book.title }}</h5>
+				            <h3 class="card-title">{{ book.title }}</h3>
 				            <p class="card-text">ISBN : {{ book.isbn }}</p>
-				            <a href="{{ url_for('book', details = book.isbn) }}" 
+				            <a href="{{ url_for('book', details = book.isbn) }}"
 			            		class="btn btn-primary">Go to book page</a>
 			        	</div>
 			    	</div>
 		        {% endfor %}
-		   </div>
-		</div>
-    </div>
-			
+		    </div>
+    	</div>
+	</div>
+
 	<footer class = "button">
        	Andrømed &copy; 2020
     </footer>

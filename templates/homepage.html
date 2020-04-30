@@ -12,29 +12,9 @@
 {% endblock %}
 
 {% block body %}
-	<nav class="navbar navbar-expand-md navbar-light bg-light">
-		<form action = "{{ url_for('search')}}" method="post">
-			<!-- Search form -->
-			<div class="search bar">
-		  		<input class="form-control" type = "text" name = "book_details" 	placeholder = "ISBN / Title / Author" aria-label = "Search">
-		  		
-		  		<div class="login-submit-container">
-					<button type="submit" class="btn btn-primary 						login-submit-button">Search</button>
-				</div>
-			</div>	
-		</form>			
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-	        <div class="navbar-nav ml-auto">
-	            <a class="nav-item nav-link mr-5" href = "{{url_for('marked')}}">
-	            	Marked </a>
-	            <a class="nav-item nav-link mr-5" href = "{{url_for('register')}}">		Logout</a>
-	        </div>
-        </div>
-    </nav>
-
 	<div class = "container">
 		<div class = "col-lg-4">
-			{% for book  in books %}   	
+			{% for book  in books %}
 				<div class = "container p-4 my-5 bg-dark text-white">
 				  	<ul style="font-size: 20px">
 				  	<h1>{{ book.title }}</h1>

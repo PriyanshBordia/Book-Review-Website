@@ -1,15 +1,15 @@
 import os
 import requests
-import connect_database  #
+# import connect_database  #
 
-from flask import Flask, render_template, session, request, url_for, redirect, jsonify, flash
+from flask import Flask, render_template, session, request, url_for, redirect, jsonify, flash, json
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from cerberus import Validator
-from util import sql, get_password, search_in_books, write_review, get_reviews
+# from util import sql, get_password, search_in_books, write_review, get_reviews
 
-db = connect_database.get_db()
+# db = connect_database.get_db()
 
 app = Flask(__name__)
 
@@ -31,15 +31,23 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+	return redirect("login")
+
+
+"""Bookmarked Books"""
+@app.route("/marked/<int:user_id>")
+def marked():
+	book_isbn = db.execute("SELECT * books WHERE user_id = id ")
+	books = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": book_isbn}).fetchall()
+	return render_template("marked.html", nav1="Search", link1="search", nav2="Logout", link2="login", books=books)
 
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
 	if request.method == "POST":
-		return render_template("error.html", mesasge = "Try registering!!")
+		return render_template("error.html", mesasge = "Try registering!!")			#
 	else:
-		return render_template("register.html")
+		return render_template("register.html", nav1="Login", link1="index", nav2="Register", link2="register")
 
 
 @app.route("/register_user", methods=["POST", "GET"])
@@ -66,7 +74,7 @@ def register_user():
 """Login to the page with username and password"""
 @app.route("/login")
 def login():
-	return render_template("index.html")	
+	return render_template("index.html", nav1="Login", link1="index", nav2="Register", link2="register")	
 
 
 """If user exists create a local session for the user"""
@@ -84,13 +92,13 @@ def session():
 	else:
 		"""Create a session for the user"""
 		books = db.execute("SELECT * FROM books FETCH FIRST 15 ROW ONLY")
-		return render_template("homepage.html", books=books)
+		return render_template("homepage.html", nav1="Marked", link1="index", nav2="Logout", link2="index", books=books)
 
 
 @app.route("/homepage")
 def homepage():
 	books = db.execute("SELECT * FROM books FETCH FIRST 15 ROW ONLY")
-	return render_template("homepage.html", books = books)
+	return render_template("homepage.html", nav1="Marked", link1="index", nav2="Logout", link2="login", books = books)
 
 
 # Search books that match the string entered
@@ -160,12 +168,6 @@ def book_api(title):
 		raise Exception("Error: API request failed!")
 	details = res.json()
 
-"""Bookmarked Books"""
-@app.route("/marked")
-def marked():
-	book_isbn = db.execute("SELECT *")
-	books = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": book_isbn}).fetchall()
-	return render_template("marked.html", books=books)
 
 """Print details of all the books in database"""
 @app.route("/books/<string:details>")
