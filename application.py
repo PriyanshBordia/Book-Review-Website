@@ -28,6 +28,7 @@ Session(app)
 engine = create_engine("postgres://bezoopliubauew:ff447efa87a96336c27fa8c83def232d790d8b48f8da38e236259b4f447926f7@ec2-46-137-84-140.eu-west-1.compute.amazonaws.com:5432/d9kk3aqpv4nur1")
 db = scoped_session(sessionmaker(bind=engine))
 
+uniq_id = -1
 
 @app.route("/")
 def index():
@@ -48,6 +49,20 @@ def register():
 		return render_template("error.html", mesasge = "Try registering!!")			#
 	else:
 		return render_template("register.html", nav1="Login", link1="index", nav2="Register", link2="register")
+
+
+@app.route('/register_error/<string:error>')
+def register_error(error):
+	if error_type == 'email':
+		error_message = "Please enter a valid email!"
+	
+	elif error_type == 'pass':
+		error_message = "Passwords do not match!"
+
+	elif error_type == 'already exists':
+		error_message = "Sorry. The email already exists in our records. Please register with another email."
+
+	return render_template("register_error.html", message=error_message)	
 
 
 @app.route("/register_user", methods=["POST", "GET"])
@@ -90,15 +105,14 @@ def login_session():
 		return render_template("error.html", message="Invalid username or password! It takes only 15s to register! Try registering.");
 
 	else:
-		return render_template("search.html", nav1="Marked", link1="index", nav2="Logout", link2="index", books=books)
-
-		# redirect("search_book")
-"""Create a session for the user"""
-
-@app.route("/homepage")
-def homepage():
-	books = db.execute("SELECT * FROM books FETCH FIRST 15 ROW ONLY")
-	return render_template("homepage.html", nav1="Marked", link1="index", nav2="Logout", link2="login", books = books)
+		unique_id = db.execute("SELECT id FROM user_details WHERE (username = :username AND password = :password)", {"username": user_name, "password": user_pass})
+		
+		global uniq_id 
+		uniq_id = unique_id.first()[0]
+	
+		name = user_name.split("@")
+		name = name[0]
+		return render_template("search.html" , name=name, nav1="Marked", link1="index", nav2="Logout", link2="index", books=books)
 
 
 @app.route("/search_book")
@@ -152,18 +166,54 @@ def search():
 		return render_template("books.html", nav1="Marked", link1="index", nav2="Logout", link2="login", books=books)
 
 
+"""Print details of all the books in database"""
+@app.route("/books/<string:details>")
+def books(details):
+	books = db.execute("SELECT * FROM books WHERE isbn OR title OR author LIKE '%a%'").fetchall()
+	return render_template("books.html", books=books)
+
+
 # Details about about with provided isbn
 @app.route("/book/<string:details>")
 def book(details):
 	if details is None:
 		return render_template("error.html", message="URL not found!!")
+	
 	book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": details}).fetchone()
 
 	if book is None:
 		return render_template("error.html", message = "No book with entered title / Invalid ISBN")
 	
-	return render_template("book.html", nav1="Search", link1="search_book", nav2="Logout", link2="login", book=book)
+	return render_template("book.html" , qid=uniq_id, nav1="Search", link1="search_book", nav2="Logout", link2="login", book=book)
 
+
+@app.route("/user_review/<string:book_isbn>", methods=["GET", "POST"])
+def user_review(book_isbn):
+
+	global uniq_id
+
+	book_review = str(request.form.get("book_review"))
+	book_rating = str(request.form.get("book_rating"))
+
+	if uniq_id == -1:
+		render_template("error.html", message="Login to write a review!!")
+
+	if request.method == "GET":
+		render_template("error.html", message="Please Write a review and then submit!")
+
+	if db.execute("SELECT * FROM reviews WHERE (isbn = :book_isbn AND user_id = :uniq_id)", {"book_isbn": book_isbn, "uniq_id": uniq_id}).rowcount != 0:
+		render_template("error.html", message="Sorry, You can review a book only once!")
+
+	db.execute("INSERT INTO reviews (user_id, isbn, review, rating) VALUES (:id, :isbn, :review, :rating)" ,{"id": uniq_id, "isbn": book_isbn, "review": book_review, "rating": book_rating})
+	db.commit()
+
+	book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": book_isbn}).fetchone()
+
+	return render_template("book.html", qid=uniq_id, nav1="Search", link1="search", nav2="Logout", link2="index", book=book, book_rating=book_rating, book_review=book_review)
+
+# @app.route("/display_review")
+# def display_review():
+	
 """Avg Ratings and rating distribution, total count"""
 @app.route("/api/<string:title>", methods=["POST", "GET"])
 def book_api(title):
@@ -174,26 +224,17 @@ def book_api(title):
 	details = res.json()
 
 
-"""Print details of all the books in database"""
-@app.route("/books/<string:details>")
-def books(details):
-	books = db.execute("SELECT * FROM books WHERE isbn OR title OR author LIKE '%a%'").fetchall()
-	return render_template("books.html", books=books)
+@app.route("/logout")
+def logout():
+	global uniq_id
+	uniq_id = -1
+	redirect("login")
 
+
+@app.route("/homepage")
+def homepage():
+	books = db.execute("SELECT * FROM books FETCH FIRST 15 ROW ONLY")
+	return render_template("homepage.html", nav1="Marked", link1="index", nav2="Logout", link2="login", books = books)
 
 if __name__ == '__main__':
 	app.run(debug=True)
-
-@app.route('/register_error/<string:error>')
-def register_error(error):
-#Corresponding error messages
-	if error_type == 'email':
-		error_message = "Please enter a valid email!"
-	
-	elif error_type == 'pass':
-		error_message = "Passwords do not match!"
-
-	elif error_type == 'already exists':
-		error_message = "Sorry. The email already exists in our records. Please register with another email."
-
-	return render_template("register_error.html", message=error_message)	
