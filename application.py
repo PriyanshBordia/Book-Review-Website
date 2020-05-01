@@ -38,6 +38,7 @@ def index():
 """Bookmarked Books"""
 @app.route("/marked/<int:user_id>")
 def marked():
+	global uniq_id
 	book_isbn = db.execute("SELECT * books WHERE user_id = id ")
 	books = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": book_isbn}).fetchall()
 	return render_template("marked.html", nav1="Search", link1="search", nav2="Logout", link2="login", books=books)
@@ -46,9 +47,9 @@ def marked():
 @app.route("/register", methods=["POST", "GET"])
 def register():
 	if request.method == "POST":
-		return render_template("error.html", mesasge = "Try registering!!")			#
+		return render_template("error.html", mesasge = "Try registering!!", prev_link="login")			#
 	else:
-		return render_template("register.html", nav1="Login", link1="index", nav2="Register", link2="register")
+		return render_template("register.html", nav1="Login", link1="login", nav2="Register", link2="register")
 
 
 @app.route('/register_error/<string:error>')
@@ -68,17 +69,17 @@ def register_error(error):
 @app.route("/register_user", methods=["POST", "GET"])
 def register_user():
 	if request.method == "GET":
-		return render_template("error.html", mesasge = "Try registering!!")
+		return render_template("error.html", mesasge = "Try registering!!", prev_link="register")
 	
 	user_name = request.form.get("user_name")
 	user_pass = request.form.get("user_pass")
 	user_pass_re = request.form.get("user_pass_re")
 
 	if user_pass != user_pass_re:
-		return render_template("error.html", mesasge="Password doesn't match!!")
+		return render_template("error.html", mesasge="Password doesn't match!!", prev_link="register")
 	
 	if db.execute("SELECT (username, password) FROM user_details WHERE (username = :username AND password = :password)", {"username": user_name, "password": user_pass}).rowcount == 1:
-		return render_template("error.html", message="Already a user! Try login.");
+		return render_template("error.html", message="Already a user! Try login.", prev_link="login");
 
 	db.execute("INSERT INTO user_details (username, password) VALUES (:username, :password)", {"username": user_name, "password": user_pass})
 	db.commit()
@@ -89,20 +90,20 @@ def register_user():
 """Login to the page with username and password"""
 @app.route("/login")
 def login():
-	return render_template("index.html", nav1="Login", link1="index", nav2="Register", link2="register")	
+	return render_template("login.html", nav1="Login", link1="login", nav2="Register", link2="register")	
 
 
 """If user exists create a local session for the user"""
 @app.route("/login_session", methods=["POST", "GET"])
 def login_session():
 	if request.method == "GET":
-		return render_template("error.html", message="Try Login!!")
+		return render_template("error.html", message="Try Login!!", prev_link="login")
 
 	user_name = str(request.form.get("user_name"))
 	user_pass = str(request.form.get("user_pass"))
 	
 	if db.execute("SELECT * FROM user_details WHERE (username = :username AND password = :password)", {"username": user_name, "password": user_pass}).rowcount == 0:
-		return render_template("error.html", message="Invalid username or password! It takes only 15s to register! Try registering.");
+		return render_template("error.html", message="Invalid username or password! It takes only 15s to register! Try registering.", prev_link="login")
 
 	else:
 		unique_id = db.execute("SELECT id FROM user_details WHERE (username = :username AND password = :password)", {"username": user_name, "password": user_pass})
@@ -128,7 +129,7 @@ def search():
 	try :
 		book_details = str(request.form.get("book_details"))
 	except ValueError:
-		return render_template("error.html", message="No book matches given details number!")
+		return render_template("error.html", message="No book matches given details number!", prev_link="search_book")
 
 	books = []
 	#Check for existence of book with provided title
@@ -177,18 +178,18 @@ def books(details):
 @app.route("/book/<string:details>")
 def book(details):
 	if details is None:
-		return render_template("error.html", message="URL not found!!")
+		return render_template("error.html", message="URL not found!!", prev_link="search_book")
 	
 	book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": details}).fetchone()
 
 	if book is None:
-		return render_template("error.html", message = "No book with entered title / Invalid ISBN")
+		return render_template("error.html", message = "No book with entered title / Invalid ISBN", prev_link="search_book")
 	
 	return render_template("book.html" , qid=uniq_id, nav1="Search", link1="search_book", nav2="Logout", link2="login", book=book)
 
 
 @app.route("/user_review/<string:book_isbn>", methods=["GET", "POST"])
-def user_review(book_isbn):
+def user_review(book_isbn: str):
 
 	global uniq_id
 
@@ -196,32 +197,32 @@ def user_review(book_isbn):
 	book_rating = str(request.form.get("book_rating"))
 
 	if uniq_id == -1:
-		render_template("error.html", message="Login to write a review!!")
+		render_template("error.html", message="Login to write a review!!", prev_link="login")
 
 	if request.method == "GET":
-		render_template("error.html", message="Please Write a review and then submit!")
+		render_template("error.html", message="Please Write a review and then submit!", prev_link="")
 
 	if db.execute("SELECT * FROM reviews WHERE (isbn = :book_isbn AND user_id = :uniq_id)", {"book_isbn": book_isbn, "uniq_id": uniq_id}).rowcount != 0:
-		render_template("error.html", message="Sorry, You can review a book only once!")
+		render_template("error.html", message="Sorry, You can review a book only once!", prev_link="search_book")
 
 	db.execute("INSERT INTO reviews (user_id, isbn, review, rating) VALUES (:id, :isbn, :review, :rating)" ,{"id": uniq_id, "isbn": book_isbn, "review": book_review, "rating": book_rating})
 	db.commit()
 
 	book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": book_isbn}).fetchone()
 
-	return render_template("book.html", qid=uniq_id, nav1="Search", link1="search", nav2="Logout", link2="index", book=book, book_rating=book_rating, book_review=book_review)
+	return render_template("book.html", qid=uniq_id, nav1="Search", link1="search_book", nav2="Logout", link2="index", book=book, book_rating=book_rating, book_review=book_review)
 
-# @app.route("/display_review")
-# def display_review():
-	
+
 """Avg Ratings and rating distribution, total count"""
-@app.route("/api/<string:title>", methods=["POST", "GET"])
-def book_api(title):
-	res = requests.get("https://www.goodreads.com/book/title.json", 
-						params={"format": json, "key": "P2LGOZuBDHH7LSzJZhnsA", "title": "Blink"})
+@app.route("/api/<string:details>", methods=["POST", "GET"])
+def book_api(details):
+	res = requests.get("https://www.goodreads.com/book/review_counts.json",
+                       params={"key":  "P2LGOZuBDHH7LSzJZhnsA", "isbns": details}).json()
+	
 	if res.status_code != 200:
 		raise Exception("Error: API request failed!")
-	details = res.json()
+	
+	rev_ratings = res['books'][0]
 
 
 @app.route("/logout")
@@ -236,5 +237,20 @@ def homepage():
 	books = db.execute("SELECT * FROM books FETCH FIRST 15 ROW ONLY")
 	return render_template("homepage.html", nav1="Marked", link1="index", nav2="Logout", link2="login", books = books)
 
+def main():
+	details = input("ISBN: ")
+
+	res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "P2LGOZuBDHH7LSzJZhnsA", "isbns": details}).json()
+	
+	if res.status_code != 200:
+		raise Exception("Error: API request failed!")
+	
+	response = res['books']
+	rev_count = response['review_count']
+	avg_ratig = response['average_rating']
+
+	print(f"{rev_ratings}   {avg_ratig}")
+
 if __name__ == '__main__':
-	app.run(debug=True)
+	main()
+	# app.run(debug=True)

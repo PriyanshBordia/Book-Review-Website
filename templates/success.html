@@ -19,15 +19,18 @@
 			text-decoration: none !important;
 		}
 	</style>
+
+	<!--Icon-->
+    <link href = "static/icons/icons8-clous-checked-64.png" rel = "icon">
 {% endblock %}
 
 {% block body %}
-	<div>	
+	<div>
 		<div class="alert alert-success" role="alert">
 			{{ message }}
 		</div>
 		<button>
 	    	<a href = "{{ url_for('login') }}">Go Back.</a>
 	    </button>
-	</div> 
+	</div>
 {% endblock %}
