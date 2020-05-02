@@ -28,7 +28,7 @@ Session(app)
 engine = create_engine("postgres://bezoopliubauew:ff447efa87a96336c27fa8c83def232d790d8b48f8da38e236259b4f447926f7@ec2-46-137-84-140.eu-west-1.compute.amazonaws.com:5432/d9kk3aqpv4nur1")
 db = scoped_session(sessionmaker(bind=engine))
 
-uniq_id = -1
+uniq_id = None
 
 @app.route("/")
 def index():
@@ -36,18 +36,26 @@ def index():
 
 
 """Bookmarked Books"""
-@app.route("/marked/<int:user_id>")
+@app.route("/marked")
 def marked():
 	global uniq_id
-	book_isbn = db.execute("SELECT * books WHERE user_id = id ")
-	books = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": book_isbn}).fetchall()
-	return render_template("marked.html", nav1="Search", link1="search", nav2="Logout", link2="login", books=books)
+
+	if uniq_id is None:
+		return render_template("error.html", message="Please LogIn to See bookmarked!", prev_link="login")
+
+	books = db.execute("SELECT * FROM marked WHERE mark_id = :id", {"id": user_id}).fetchall()
+
+	if books is None:
+		return render_template("success.html", message="None Books Marked", prev_link="search_book")
+
+	else:	
+		return render_template("marked.html", nav1="Search", link1="search", nav2="Logout", link2="login", books=books)
 
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
 	if request.method == "POST":
-		return render_template("error.html", mesasge = "Try registering!!", prev_link="login")			#
+		return render_template("error.html", mesasge = "Try registering!!", prev_link="login")		
 	else:
 		return render_template("register.html", nav1="Login", link1="login", nav2="Register", link2="register")
 
@@ -77,14 +85,15 @@ def register_user():
 
 	if user_pass != user_pass_re:
 		return render_template("error.html", mesasge="Password doesn't match!!", prev_link="register")
-	
+	# redirect("register_error", error="pass")
+
 	if db.execute("SELECT (username, password) FROM user_details WHERE (username = :username AND password = :password)", {"username": user_name, "password": user_pass}).rowcount == 1:
 		return render_template("error.html", message="Already a user! Try login.", prev_link="login");
 
 	db.execute("INSERT INTO user_details (username, password) VALUES (:username, :password)", {"username": user_name, "password": user_pass})
 	db.commit()
 
-	return render_template("success.html", message="Successfully Registered Now you can login")
+	return render_template("success.html", message="Successfully Registered Now you can login", prev_link="login")
 
 
 """Login to the page with username and password"""
