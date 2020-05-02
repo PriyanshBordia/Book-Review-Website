@@ -4,7 +4,7 @@
     <style media="screen">
         .container
         {
-            padding: 10px;
+            padding: 8px;
             <!-- border: 10px solid white; -->
         }
     </style>
@@ -17,10 +17,10 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container container-fluid mt-4">
+	<div class="container container-fluid mt-3">
 		<div class="row justify-content-center">
 				{% for book in books %}
-                <div class="col-lg-4 col-md-5 col-sm-6 col-8 my-container mb-5">
+                <div class="col-lg-4 col-md-5 col-sm-6 col-8 my-container mb-4">
 					<div class="card">
 						<div class="card-header h5">
 							{{ book.author }}, {{ book.year }}
@@ -36,8 +36,4 @@
 				{% endfor %}
 			</div>
 		</div>
-
-	<footer class = "button">
-		Andrømed &copy; 2020
-	</footer>
 {% endblock %}

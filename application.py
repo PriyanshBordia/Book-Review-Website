@@ -106,11 +106,11 @@ def login_session():
 		return render_template("error.html", message="Invalid username or password! It takes only 15s to register! Try registering.", prev_link="login")
 
 	else:
+		global uniq_id
 		unique_id = db.execute("SELECT id FROM user_details WHERE (username = :username AND password = :password)", {"username": user_name, "password": user_pass})
+
+		uniq_id = unique_id[0]["id"]
 		
-		global uniq_id 
-		uniq_id = unique_id.first()[0]
-	
 		name = user_name.split("@")
 		name = name[0]
 		return render_template("search.html" , name=name, nav1="Marked", link1="index", nav2="Logout", link2="index", books=books)
@@ -180,16 +180,13 @@ def book(details):
 	if details is None:
 		return render_template("error.html", message="URL not found!!", prev_link="search_book")
 	
-	book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": details}).fetchone()
-
-	if book is None:
-		return render_template("error.html", message = "No book with entered title / Invalid ISBN", prev_link="search_book")
+	book = book_api(details)
 	
 	return render_template("book.html" , qid=uniq_id, nav1="Search", link1="search_book", nav2="Logout", link2="login", book=book)
 
 
 @app.route("/user_review/<string:book_isbn>", methods=["GET", "POST"])
-def user_review(book_isbn: str):
+def user_review(book_isbn):
 
 	global uniq_id
 
@@ -210,19 +207,48 @@ def user_review(book_isbn: str):
 
 	book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": book_isbn}).fetchone()
 
-	return render_template("book.html", qid=uniq_id, nav1="Search", link1="search_book", nav2="Logout", link2="index", book=book, book_rating=book_rating, book_review=book_review)
+	return render_template("book.html", qid=session["user_id"], nav1="Search", link1="search_book", nav2="Logout", link2="index", book=book, book_rating=book_rating, book_review=book_review)
 
 
 """Avg Ratings and rating distribution, total count"""
 @app.route("/api/<string:details>", methods=["POST", "GET"])
 def book_api(details):
+
+	book_details = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": details}).fetchone()
+
+	if book_details is None:
+		return render_template("error.html", message = "No book with entered title / Invalid ISBN", prev_link="search_book")
+	
 	res = requests.get("https://www.goodreads.com/book/review_counts.json",
-                       params={"key":  "P2LGOZuBDHH7LSzJZhnsA", "isbns": details}).json()
+                       params={"key": "ko689CsTUQ8ecggW4ootw", "isbns": details})
 	
 	if res.status_code != 200:
 		raise Exception("Error: API request failed!")
 	
-	rev_ratings = res['books'][0]
+	response = res.json()
+
+	count = response['books'][0]['reviews_count']
+	avg = response['books'][0]['average_rating']
+
+	book = {}
+
+	book[0] = book_details.isbn
+	book[1] = book_details.title
+	book[2] = book_details.author
+	book[3] = book_details.year
+	book[4] = count
+	book[5] = avg
+
+	if request.method is "GET":
+		return jsonify(title=book[1],
+						author=book[2], 
+						 year=book[3],
+						  isbn=book[0],
+						  review_count=book[4],
+    						average_score=book[5])
+	
+	else:
+		return book
 
 
 @app.route("/logout")
@@ -237,19 +263,6 @@ def homepage():
 	books = db.execute("SELECT * FROM books FETCH FIRST 15 ROW ONLY")
 	return render_template("homepage.html", nav1="Marked", link1="index", nav2="Logout", link2="login", books = books)
 
-def main():
-	details = input("ISBN: ")
-
-	res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "P2LGOZuBDHH7LSzJZhnsA", "isbns": details}).json()
-	
-	if res.status_code != 200:
-		raise Exception("Error: API request failed!")
-	
-	response = res['books']
-	rev_count = response['review_count']
-	avg_ratig = response['average_rating']
-
-	print(f"{rev_ratings}   {avg_ratig}")
 
 if __name__ == '__main__':
 	main()
