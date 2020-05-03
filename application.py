@@ -265,6 +265,7 @@ def homepage():
 	return render_template("homepage.html", nav1="Marked", link1="marked", nav2="Logout", link2="logout", books = books)
 
 
-if __name__ == "__main__":
-	app.run(debug=true)
+if __name__ == '__main__':
+    app.debug = True
+    app.run()
 
