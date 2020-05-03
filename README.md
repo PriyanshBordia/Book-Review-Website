@@ -22,3 +22,14 @@ bash run_local.sh
 #### Login Page:
 ![Login](./screenshots/login.png)
 
+### Search:
+![Search](./screenshots/search.png)
+
+### Search Results:
+![books](./screenshots/books.png)
+
+### Book:
+![book](./screenshots/book.png)
+
+### Book Reviewed
+![reviewed](./screenshots/book_review.png)

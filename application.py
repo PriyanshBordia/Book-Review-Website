@@ -256,7 +256,8 @@ def book_api(ISBN):
 def logout():
 	global uniq_id
 	uniq_id = -1
-	redirect("login")
+	return render_template("login.html", nav1="Login", link1="login", nav2="Register", link2="register")	
+	# redirect("login")
 
 
 @app.route("/homepage")
