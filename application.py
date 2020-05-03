@@ -203,7 +203,6 @@ def user_review(book_isbn):
 	if request.method == "GET":
 		render_template("error.html", message="Please Write a review and then submit!", prev_link="#")
 
-	book = book_api(book_isbn)
 	book_review = str(request.form.get("book_review"))
 	book_rating = str(request.form.get("book_rating"))
 
@@ -212,10 +211,11 @@ def user_review(book_isbn):
 
 	if db.execute("SELECT * FROM reviews WHERE (user_id = :uniq_id AND isbn = :ISBN)", { "uniq_id": uniq_id, "ISBN": book_isbn}).rowcount == 0:
 		db.execute("INSERT INTO reviews (user_id, isbn, review, rating) VALUES (:id, :isbn, :review, :rating)" ,{"id": uniq_id, "isbn": book_isbn, "review": book_review, "rating": book_rating})
-		db.commit()
-  		
+		db.commit()	
+		
+		book = book_api(book_isbn)
 		return render_template("book_review.html", name=qname, nav1="Search", link1="search_book", nav2="Logout", link2="logout", book=book, book_rating=book_rating, book_review=book_review)
-
+	
 	else:
 		return render_template("error.html", message="Sorry, You can review a book only once!", prev_link="search_book")
 		
@@ -230,7 +230,7 @@ def book_api(ISBN):
 		return render_template("error.html", message = "No book with entered title / Invalid ISBN", prev_link="search_book")
 	
 	res = requests.get("https://www.goodreads.com/book/review_counts.json",
-                       params={"key": "ko689CsTUQ8ecggW4ootw", "isbns": ISBN})
+					   params={"key": "ko689CsTUQ8ecggW4ootw", "isbns": ISBN})
 	
 	if res.status_code != 200:
 		raise Exception("Error: API request failed!")
