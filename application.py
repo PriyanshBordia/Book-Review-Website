@@ -5,7 +5,6 @@ from flask import Flask, render_template, session, request, url_for, redirect, j
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from cerberus import Validator
 
 app = Flask(__name__)
 
