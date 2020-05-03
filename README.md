@@ -2,10 +2,8 @@
 
 You can find app at https://freezing-pebble-24-03-2020.herokuapp.com/
 
-Web Programming with Python and JavaScript
-
-> Created a simple book review website using python's web framework flask and 
-> styles using HTML, CSS, SCSS
+> It's a simple book review website using python's web framework flask and 
+> styles using HTML, CSS, SASS
 
 To run this app locally, follow these instructions:
 ```
