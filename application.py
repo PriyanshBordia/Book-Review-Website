@@ -266,7 +266,7 @@ def homepage():
 	return render_template("homepage.html", nav1="Marked", link1="marked", nav2="Logout", link2="logout", books = books)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
 
