@@ -28,6 +28,8 @@ bash run_local.sh
 ### Search Results:
 ![books](./screenshots/books.png)
 
+![books2](./screenshots/books2.png)
+
 ### Book:
 ![book](./screenshots/book.png)
 
