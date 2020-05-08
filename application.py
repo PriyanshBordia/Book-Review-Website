@@ -84,6 +84,9 @@ def register_user():
 	if db.execute("SELECT (username, password) FROM user_details WHERE (username = :username AND password = :password)", {"username": user_name, "password": user_pass}).rowcount == 1:
 		return render_template("error.html", message="Already a user! Try login.", prev_link="login");
 
+	global uniq_id 
+	uniq_id = -1
+	
 	db.execute("INSERT INTO user_details (username, password) VALUES (:username, :password)", {"username": user_name, "password": user_pass})
 	db.commit()
 
