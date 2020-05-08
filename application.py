@@ -87,9 +87,6 @@ def register_user():
 	db.execute("INSERT INTO user_details (username, password) VALUES (:username, :password)", {"username": user_name, "password": user_pass})
 	db.commit()
 
-	global uniq_id 
-	uniq_id = -1
-
 	return render_template("success.html", message="Successfully Registered Now you can login", prev_link="login")
 
 
