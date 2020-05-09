@@ -10,5 +10,23 @@
 {% endblock %}
 
 {% block body %}
-
+	<div class="container container-fluid mt-3">
+		<div class="row justify-content-center">
+			{% for book in books %}
+                <div class="col-lg-4 col-md-5 col-sm-6 col-8 my-container mb-4">
+					<div class="card">
+						<div class="card-header h5">
+							{{ book.author }}, {{ book.year }}
+						</div>
+						<div class="card-body h6">
+							<h3 class="card-title">{{ book.title }}</h3>
+							<p class="card-text">ISBN : {{ book.isbn }}</p>
+							<a href="{{ url_for('book', details = book.isbn) }}"
+								class="btn btn-primary">Go to book page</a>
+						</div>
+					</div>
+                </div>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}
