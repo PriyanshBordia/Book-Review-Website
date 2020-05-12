@@ -118,7 +118,7 @@ def login_session():
 
 		uniq_id = int(unique_id.first()[0])
 		
- # Extracting username from email as string befor '@''
+	# Extracting username from email as string befor '@''
 		name = user_name.split("@")
 		
 		global qname
@@ -257,9 +257,9 @@ def logout():
 
 	if uniq_id == -1
 		return render_template("error.html", message="Sorry, You haven't logedIn!!", prev_link="login")
-	uniq_id = -1
-	return render_template("login.html", nav1="Login", link1="login", nav2="Register", link2="register")	
-	# redirect("login")
+	else:	
+		uniq_id = -1
+		return render_template("login.html", nav1="Login", link1="login", nav2="Register", link2="register")	
 
 
 @app.route("/homepage")
