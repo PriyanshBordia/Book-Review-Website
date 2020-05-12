@@ -255,8 +255,8 @@ def book_api(ISBN):
 def logout():
 	global uniq_id
 	
-	if uniq_id == -1:
-		return render_template("error.html", message="Sorry, You haven't logedIn!!", prev_link="login")
+	if uniq_id == -2:
+		return render_template("error.html", message="Sorry, You haven't Registered!!", prev_link="register")
 
 	elif uniq_id == -1:
 		return render_template("error.html", message="Sorry, You haven't logedIn!!", prev_link="login")
