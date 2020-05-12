@@ -79,8 +79,10 @@ def register_user():
 
 	if user_pass != user_pass_re:
 		return render_template("error.html", mesasge="Password doesn't match!!", prev_link="register")
-	# redirect("register_error", error="pass")
 
+	if len(user_pass) == 0:
+		return render_template("error.html", message="Password field can 't be empty!", prev_link="register")
+	
 	if db.execute("SELECT (username, password) FROM user_details WHERE (username = :username AND password = :password)", {"username": user_name, "password": user_pass}).rowcount == 1:
 		return render_template("error.html", message="Already a user! Try login.", prev_link="login");
 
@@ -260,6 +262,7 @@ def logout():
 
 	elif uniq_id == -1:
 		return render_template("error.html", message="Sorry, You haven't logedIn!!", prev_link="login")
+	
 	else:	
 		uniq_id = -1
 		return render_template("login.html", nav1="Login", link1="login", nav2="Register", link2="register")	
