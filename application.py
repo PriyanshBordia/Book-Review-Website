@@ -254,6 +254,9 @@ def book_api(ISBN):
 @app.route("/logout")
 def logout():
 	global uniq_id
+
+	if uniq_id == -1
+		return render_template("error.html", message="Sorry, You haven't logedIn!!", prev_link="login")
 	uniq_id = -1
 	return render_template("login.html", nav1="Login", link1="login", nav2="Register", link2="register")	
 	# redirect("login")
@@ -262,7 +265,7 @@ def logout():
 @app.route("/homepage")
 def homepage():
 	books = db.execute("SELECT * FROM books FETCH FIRST 15 ROW ONLY")
-	return render_template("homepage.html", nav1="Marked", link1="marked", nav2="Logout", link2="logout", books = books)
+	return render_template("homepage.html", nav1="Marked", link1="marked", nav2="Logout", link2="logout", books=books)
 
 
 if __name__ == '__main__':
