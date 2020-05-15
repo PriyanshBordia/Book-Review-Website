@@ -34,7 +34,10 @@ def index():
 def marked():
 	global uniq_id
 
-	if uniq_id is None:
+	if uniq_id == -2:
+		return render_template("error.html", message="Please Register to See bookmarked!", prev_link="register")
+
+	if uniq_id == -1:
 		return render_template("error.html", message="Please LogIn to See bookmarked!", prev_link="login")
 
 	books = db.execute("SELECT * FROM marked WHERE mark_id = :id", {"id": uniq_id}).fetchall()
@@ -42,8 +45,8 @@ def marked():
 	if books is None:
 		return render_template("success.html", message="None Books Marked", prev_link="search_book")
 
-	else:	
-		return render_template("marked.html", nav1="Search", link1="search_book", nav2="Logout", link2="logout", books=books)
+	return render_template("marked.html", nav1="Search", link1="search_book", nav2="Logout", link2="logout", books=books)
+
 
 
 @app.route("/register", methods=["POST", "GET"])
