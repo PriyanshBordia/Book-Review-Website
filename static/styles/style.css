@@ -50,8 +50,7 @@ hr {
 footer {
   margin: 20px;
   padding: 10px;
-  color: grey;
-  /* Gray */
+  color: grey;  /* Gray */
   text-decoration: none !important;
   text-align: center;
   font-size: 20px;
@@ -59,8 +58,7 @@ footer {
 
 /*Hower Over Effect*/
 .button {
-  -webkit-transition-duration: 0.4s;
-  /* Safari */
+  -webkit-transition-duration: 0.4s;  /* Safari */
   transition-duration: 0.4s;
 }
 
