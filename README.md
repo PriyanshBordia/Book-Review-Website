@@ -1,9 +1,9 @@
 # Review Someone's World !
 
 You can find app at https://freezing-pebble-24-03-2020.herokuapp.com/
+> You can find walk through at https://www.youtube.com/watch?v=E8LRK0CXwdk 
 
-> It's a simple book review website using python's web framework flask and 
-> styles using HTML, CSS, SASS
+It's a simple book review website using python's web framework Flask and styles using HTML, CSS, SASS
 
 To run this app locally, follow these instructions:
 ```
