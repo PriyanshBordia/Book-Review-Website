@@ -1,6 +1,6 @@
 # Review Someone's World !
 
-#### You can find app at [Heroku](https://freezing-pebble-24-03-2020.herokuapp.com/)
+#### You can find the app @ [Heroku](https://freezing-pebble-24-03-2020.herokuapp.com/)
 
 > You can find walk through at [YouTube](https://www.youtube.com/watch?v=E8LRK0CXwdk )
 
