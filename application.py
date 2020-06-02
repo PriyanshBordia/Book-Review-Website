@@ -26,7 +26,12 @@ qname = "anonymous_user"
 
 @app.route("/")
 def index():
-	return redirect("login")
+	global uniq_id
+	
+	if uniq_id == -2 or uniq_id == -1:
+		return redirect("login")
+	else:
+		return redirect("search_book")
 
 
 """Bookmarked Books"""
