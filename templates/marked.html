@@ -1,24 +1,18 @@
 {% extends "layout.html" %}
 
 {% block head %}
-    <style media="screen">
-        .container
-        {
-            padding: 8px;
-        }
-    </style>
     <!--Icon-->
-    <link href = "static/icons/icons8-book-shelf-64.png" rel = "icon">
+    <link href = "static/icons/icons8-books-64.png" rel = "icon">
 {% endblock %}
 
 {% block title %}
- 	   Books
+    | BookMarked
 {% endblock %}
 
 {% block body %}
 	<div class="container container-fluid mt-3">
 		<div class="row justify-content-center">
-				{% for book in books %}
+			{% for book in books %}
                 <div class="col-lg-4 col-md-5 col-sm-6 col-8 my-container mb-4">
 					<div class="card">
 						<div class="card-header h5">
@@ -32,7 +26,7 @@
 						</div>
 					</div>
                 </div>
-				{% endfor %}
-			</div>
+			{% endfor %}
 		</div>
+	</div>
 {% endblock %}

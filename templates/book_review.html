@@ -22,9 +22,12 @@
                             <strong>{{ book[1] }}</strong>
                         </h5>
 		            	<p class="card-text">
-                            <strong>ISBN : </strong>{{ book[0] }}<br>
-                            <strong>Goodreads Reviews : </strong> {{ book[4] }}<br>
-			                <strong>Average Rating : </strong> {{ book[5] }} <br>
+                            <strong>ISBN : </strong>{{ book[0] }}
+                            <br>
+                            <strong>Goodreads Reviews : </strong> {{ book[4] }}
+                            <br>
+			                <strong>Average Rating : </strong> {{ book[5] }} 
+                            <br>
                         </p>
                         <a href="#review-form" class="btn btn-primary" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="review-form">Write a review</a>
                     </div>
@@ -65,5 +68,23 @@
 			    </div>
 		    </div>
 	    </div>
+        <div class="row user-reviews justify-content-center">
+            <div class="col-10 mt-10">
+                <hr class="">
+                <h4><strong>User reviews:</strong></h4>
+            </div>
+            <div class="col-10 mt-3">
+                <div class="card bg-light mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Rating : {{ book_rating }}</strong></h5>
+                        <p class="card-text">{{ book_review }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small> @{{ name }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 {% endblock %}

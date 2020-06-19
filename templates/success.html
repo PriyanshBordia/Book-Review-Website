@@ -1,8 +1,37 @@
-{% extends layout.html%}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
 
-{% block title %}
-	Registered
-{% endblock %}
-{% block body %}
-	<center><h1>Welcome {{ name }}, Onboard.</h1></center>
-{% endblock %}
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<style>
+			.message
+			{
+				max-width: 700px;
+				text-align: center;
+				margin: auto;
+				padding: 40px;
+				font-size: 24px;
+			}
+			.message a
+			{
+				text-decoration: none !important;
+			}
+		</style>
+
+		<!--Icon-->
+	    <link href = "static/icons/icons8-cloud-checked-64.png" rel = "icon">
+
+		<title>| Success </title>
+	</head>
+	<body>
+		<div class="message">
+			<div class="alert alert-success" role="alert">
+				{{ message }}
+			</div>
+			<button>
+		    	<a href = "{{ url_for(prev_link) }}">Go Back.</a>
+		    </button>
+		</div>
+	</body>
+</html>

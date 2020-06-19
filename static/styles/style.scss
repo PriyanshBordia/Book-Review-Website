@@ -1,0 +1,92 @@
+$form-btn-size: 2.5in;
+$sm: 576px;
+$lg: 768px;
+$xl: 1200px;
+
+.navbar-brand
+{
+   font-size: 24px !important;
+}
+
+.login-input
+{
+    width: $form-btn-size;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-submit-container
+{
+    width: $form-btn-size;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-submit-button
+{
+    width: $form-btn-size;
+}
+
+.search-container
+{
+      // border: 2px solid red;
+      margin-top: 30px;
+}
+
+.search-row
+{
+  //border: 2px solid blue;
+}
+
+.search-col
+{
+    background-color: #f0f0f0;
+    margin: 10px;
+    border-radius: 15px;
+}
+
+.search-result
+{
+    margin: 0.7cm;
+}
+
+.review-form
+{
+    margin: 20px;
+}
+
+.review-checkbox
+{
+    margin-top: 0.15in;
+}
+
+hr
+{
+    height: 0;
+    margin-bottom:15px;
+    background-color: gray;
+}
+
+/*Footer*/
+footer
+{
+	margin: 20px;
+    padding: 10px;
+    color: grey;         /* Gray */
+    text-decoration: none !important;
+    text-align: center;
+    font-size: 20px;
+}
+
+/*Hower Over Effect*/
+.button
+{
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.button:hover
+{
+    background-color: white;
+    color: rgb(120,81,169);
+}
