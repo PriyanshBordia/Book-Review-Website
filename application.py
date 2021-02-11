@@ -9,7 +9,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 app = Flask(__name__)
 
 # Check for environment variable
-if not "postgres://bezoopliubauew:ff447efa87a96336c27fa8c83def232d790d8b48f8da38e236259b4f447926f7@ec2-46-137-84-140.eu-west-1.compute.amazonaws.com:5432/d9kk3aqpv4nur1":
+if not "postgres://etrfsjyhdmwult:9b5b9d599e303c30bd329266871f2653016154c8f2cba5c6439022abbe341077@ec2-52-7-168-69.compute-1.amazonaws.com:5432/d4j6denllckr8l":
 	raise RuntimeError("DATABASE_URL is not set")
 
 # Configure session to use filesystem
@@ -18,7 +18,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Set up database
-engine = create_engine("postgres://bezoopliubauew:ff447efa87a96336c27fa8c83def232d790d8b48f8da38e236259b4f447926f7@ec2-46-137-84-140.eu-west-1.compute.amazonaws.com:5432/d9kk3aqpv4nur1")
+engine = create_engine(
+	"postgres://etrfsjyhdmwult:9b5b9d599e303c30bd329266871f2653016154c8f2cba5c6439022abbe341077@ec2-52-7-168-69.compute-1.amazonaws.com:5432/d4j6denllckr8l")
 db = scoped_session(sessionmaker(bind=engine))
 
 uniq_id = -2
@@ -57,7 +58,7 @@ def marked():
 @app.route("/register", methods=["POST", "GET"])
 def register():
 	if request.method == "POST":
-		return render_template("error.html", mesasge = "Try registering!!", prev_link="login")		
+		return render_template("error.html", message = "Try registering!!", prev_link="login")		
 	else:
 		return render_template("register.html", nav1="Login", link1="login", nav2="Register", link2="register")
 
@@ -79,14 +80,14 @@ def register_error(error):
 @app.route("/register_user", methods=["POST", "GET"])
 def register_user():
 	if request.method == "GET":
-		return render_template("error.html", mesasge = "Try registering!!", prev_link="register")
+		return render_template("error.html", message = "Try registering!!", prev_link="register")
 	
 	user_name = request.form.get("user_name")
 	user_pass = request.form.get("user_pass")
 	user_pass_re = request.form.get("user_pass_re")
 
 	if user_pass != user_pass_re:
-		return render_template("error.html", mesasge="Password doesn't match!!", prev_link="register")
+		return render_template("error.html", message="Password doesn't match!!", prev_link="register")
 
 	if len(user_pass) == 0:
 		return render_template("error.html", message="Password field can 't be empty!", prev_link="register")
@@ -128,7 +129,7 @@ def login_session():
 
 		uniq_id = int(unique_id.first()[0])
 		
-	# Extracting username from email as string befor '@''
+	# Extracting username from email as string before '@''
 		name = user_name.split("@")
 		
 		global qname
