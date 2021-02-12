@@ -1,7 +1,7 @@
-import os
 import requests
 
-from flask import Flask, render_template, session, request, url_for, redirect, jsonify, flash, json
+import hashlib
+from flask import Flask, render_template, request, redirect
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -91,7 +91,8 @@ def register_user():
 
 	if len(user_pass) == 0:
 		return render_template("error.html", message="Password field can 't be empty!", prev_link="register")
-	
+
+
 	if db.execute("SELECT (username, password) FROM user_details WHERE (username = :username AND password = :password)", {"username": user_name, "password": user_pass}).rowcount == 1:
 		return render_template("error.html", message="Already a user! Try login.", prev_link="login");
 
@@ -121,6 +122,7 @@ def login_session():
 	user_name = str(request.form.get("user_name"))
 	user_pass = str(request.form.get("user_pass"))
 	
+            sha256_crypt.verify("password", password)
 	if db.execute("SELECT * FROM user_details WHERE (username = :username AND password = :password)", {"username": user_name, "password": user_pass}).rowcount == 0:
 		return render_template("error.html", message="Invalid username or password! It takes only 15s to register! Try registering.", prev_link="login")
 
