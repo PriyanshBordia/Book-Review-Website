@@ -122,7 +122,6 @@ def login_session():
 	user_name = str(request.form.get("user_name"))
 	user_pass = str(request.form.get("user_pass"))
 	
-            sha256_crypt.verify("password", password)
 	if db.execute("SELECT * FROM user_details WHERE (username = :username AND password = :password)", {"username": user_name, "password": user_pass}).rowcount == 0:
 		return render_template("error.html", message="Invalid username or password! It takes only 15s to register! Try registering.", prev_link="login")
 
