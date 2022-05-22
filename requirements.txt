@@ -33,7 +33,7 @@ psycopg2-binary==2.8.5
 ptyprocess==0.6.0
 pycparser==2.20
 PyGithub==1.47
-PyJWT==1.7.1
+PyJWT==2.4.0
 PyMySQL==0.9.3
 python-dotenv==0.13.0
 python-engineio==3.12.1
