@@ -48,7 +48,7 @@ sqlparse==0.4.2
 submit50==3.0.2
 termcolor==1.1.0
 urllib3==1.26.5
-Werkzeug==0.16.0
+Werkzeug==2.2.3
 whitenoise==5.0.1
 wrapt==1.12.1
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
