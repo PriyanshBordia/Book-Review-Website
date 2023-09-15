@@ -9,7 +9,7 @@ cryptography==41.0.3
 daiquiri==2.1.1
 Deprecated==1.2.8
 dj-database-url==0.5.0
-Django==3.2.20
+Django==3.2.21
 dnspython==1.16.0
 eventlet==0.31.0
 Flask==2.2.5
